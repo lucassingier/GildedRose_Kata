@@ -4,35 +4,41 @@ class GildedRose(object):
         self.items = items
 
     def update_quality(self):
+        Age = "Aged Brie"
+        Backstage = "Backstage passes to a TAFKAL80ETC concert"
+        Sulfuras = "Sulfuras, Hand of Ragnaros"
         for item in self.items:
-            # item.name == Sulfuras, Hand of Ragnaros, foo
-            if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert":
-                if item.quality > 0:
-                    if item.name != "Sulfuras, Hand of Ragnaros":
-                        item.quality -= 1
-            # item.name == "Aged Brie" or "Backstage passes to a TAFKAL80ETC concert"
+            if item.name == Sulfuras:
+                item.sell_in = 0 #TO DO Enlever le critère sell_in de Sulfuras car ne se périme pas
             else:
+                item.sell_in -= 1 #Tous les items diminuent leur sell_in de 1
+
+            if item.name == Age:
                 if item.quality < 50:
                     item.quality += 1
-                    if item.name == "Backstage passes to a TAFKAL80ETC concert":
-                        if item.sell_in < 11:
-                            item.quality += 1
-                        if item.sell_in < 6:
-                            item.quality += 1
-
-            if item.name != "Sulfuras, Hand of Ragnaros":
-                item.sell_in = item.sell_in - 1
-            if item.sell_in < 0:
-                if item.name != "Aged Brie":
-                    if item.name != "Backstage passes to a TAFKAL80ETC concert":
-                        if item.quality > 0:
-                            if item.name != "Sulfuras, Hand of Ragnaros":
-                                item.quality -= 1
-                    else:
-                        item.quality = 0
-                else:
+                if item.sell_in < 0:
                     if item.quality < 50:
-                        item.quality = item.quality + 1
+                        item.quality += 1
+
+            elif item.name == Backstage:
+                if item.quality < 50:
+                    item.quality += 1.
+                if item.sell_in < 11:
+                    item.quality += 1
+                    if item.sell_in < 6:
+                        item.quality += 1
+                if item.sell_in < 0:
+                    item.quality = 0
+
+            elif item.name == Sulfuras:
+                if item.quality < 50:
+                        item.quality += 1
+            else:
+                if item.quality > 0:
+                    item.quality -= 1
+                if item.sell_in < 0:
+                    if item.quality > 0:
+                        item.quality -=1
 
 
 class Item:
