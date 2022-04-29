@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+test = "test"
 class GildedRose(object):
 
     def __init__(self, items):
