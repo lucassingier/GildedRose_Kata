@@ -28,18 +28,22 @@ class Item:
 
 
 class CommonItem(Item):
+    def decrease_sellin(self):
+        self.sell_in -= 1
+
     def update_quality(self):
         self.sell_in -= 1
         if self.sell_in <= 0:
-            self.quality -= 2
+            self.quality = max(0, self.quality - 2)
         else:
-            self.quality -= 1
+            self.quality = max(0, self.quality - 1)
 
 
 #############
+
 class AgedBrie(CommonItem):
     def update_quality(self):
-        self.sell_in -= 1
+        CommonItem.decrease_sellin(self)
         if self.quality < 50:
             self.quality += 1
 
@@ -55,7 +59,7 @@ class Sulfuras(CommonItem):
 
 class Backstage(CommonItem):
     def update_quality(self):
-        self.sell_in -= 1
+        CommonItem.decrease_sellin(self)
         if self.quality < 50:
             self.quality += 1
         if 11 > self.sell_in > 5:
@@ -71,13 +75,8 @@ class Backstage(CommonItem):
 
 class Conjured(CommonItem):
     def update_quality(self):
-        self.sell_in -= 1
-        if self.sell_in < 0 and self.quality < 5:
-            self.quality = 0
-        elif self.sell_in < 0:
-            self.quality -= 4
+        CommonItem.decrease_sellin(self)
+        if self.sell_in <= 0:
+            self.quality = max(0, self.quality - 4)
         else:
-            self.quality -= 2
-
-
-
+            self.quality = max(0, self.quality - 2)
