@@ -2,8 +2,11 @@ class GildedRose(object):
 
     def __init__(self, items):
         self.items = items
+        
+
 
     def update_quality(self):
+        
         for item in self.items:
             if item.name == "Aged Brie":
                 AgedBrie.update_quality(item)
@@ -28,6 +31,7 @@ class Item:
 
 
 class CommonItem(Item):
+    max_quality = 50
     def decrease_sellin(self):
         self.sell_in -= 1
 
@@ -39,16 +43,12 @@ class CommonItem(Item):
             self.quality = max(0, self.quality - 1)
 
 
-#############
-
 class AgedBrie(CommonItem):
     def update_quality(self):
         CommonItem.decrease_sellin(self)
-        if self.quality < 50:
+        if self.quality < CommonItem.max_quality:
             self.quality += 1
 
-
-#############
 
 class Sulfuras(CommonItem):
     def update_quality(self):
@@ -60,7 +60,7 @@ class Sulfuras(CommonItem):
 class Backstage(CommonItem):
     def update_quality(self):
         CommonItem.decrease_sellin(self)
-        if self.quality < 50:
+        if self.quality < CommonItem.max_quality:
             self.quality += 1
         if 11 > self.sell_in > 5:
             self.quality += 1
@@ -68,8 +68,8 @@ class Backstage(CommonItem):
             self.quality += 2
         if self.sell_in < 0:
             self.quality = 0
-        if self.quality > 50:
-            self.quality = 50
+        if self.quality > CommonItem.max_quality:
+            self.quality = CommonItem.max_quality
 
 #############
 
