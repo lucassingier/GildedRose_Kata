@@ -75,6 +75,25 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEquals(9, items[0].quality) and self.assertEquals(9, items[0].sell_in)
 
+    def test_classic_item_less_0_sellin_decrease_2_quality(self):
+        items = [Item("Item commun", -5, 10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEquals(8, items[0].quality)
+
+    #conjured item
+    def test_classic_item_decrease_1_sellin_2_quality(self):
+        items = [Item("Conjured item", 10, 10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEquals(8, items[0].quality) and self.assertEquals(9, items[0].sell_in)
+
+    def test_classic_item_less_0_sellin_decrease_1_sellin_2_quality(self):
+        items = [Item("Conjured item", -5, 10)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEquals(6, items[0].quality) and self.assertEquals(-6, items[0].sell_in)
+
 
 if __name__ == '__main__':
     unittest.main()

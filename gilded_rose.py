@@ -7,12 +7,14 @@ class GildedRose(object):
         Age = "Aged Brie"
         Backstage = "Backstage passes to a TAFKAL80ETC concert"
         Sulfuras = "Sulfuras, Hand of Ragnaros"
+        Conjured = "Conjured item"
 
         for item in self.items:
             if item.name == Sulfuras:
                 item.sell_in = 0 #TO DO Enlever le critère sell_in de Sulfuras car ne se périme pas
             else:
                 item.sell_in -= 1 #Tous les items diminuent leur sell_in de 1 à chaque fin de journée
+
                 if item.name == Age:
                     if item.quality < 50:
                         item.quality += 1
@@ -28,12 +30,19 @@ class GildedRose(object):
                                 item.quality += 1
                         if item.sell_in < 0:
                             item.quality = 0
+
+                elif item.name == Conjured:
+                    if item.sell_in < 2:
+                        if item.quality > 3:
+                            item.quality -= 4
+                    else:item.quality -= 2
+
                 else:
                     if item.quality > 0:
                         item.quality -= 1
                     if item.sell_in < 0:
                         if item.quality > 0:
-                            item.quality -=1
+                            item.quality -= 1
 
 
 class Item:
