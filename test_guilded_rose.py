@@ -6,7 +6,7 @@ from gilded_rose import Item, GildedRose
 
 class GildedRoseTest(unittest.TestCase):
     #agedbrie
-    def test_AgedBrie_should_increase_quality_one(self):
+    def test_AgedBrie_should_increase_quality_1(self):
         items = [Item("Aged Brie", 10, 20)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
@@ -18,7 +18,7 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEquals(50, items[0].quality)
 
-    def test_AgedBrie_decrease_sellin(self):
+    def test_AgedBrie_decrease_sellin_1(self):
         items = [Item("Aged Brie", 5, 20)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
@@ -43,7 +43,13 @@ class GildedRoseTest(unittest.TestCase):
         gilded_rose.update_quality()
         self.assertEquals(0, items[0].quality)
 
-    def test_Backstage_decrease_sellin(self):
+    def test_Backstage_should_never_has_quality_more50(self):
+        items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 50)]
+        gilded_rose = GildedRose(items)
+        gilded_rose.update_quality()
+        self.assertEquals(50, items[0].quality)
+
+    def test_Backstage_decrease_sellin_1(self):
         items = [Item("Backstage passes to a TAFKAL80ETC concert", 10, 40)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
@@ -63,11 +69,12 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEquals(0, items[0].sell_in)
 
     #classic item
-    def test_classic_item_decrease_one_all(self):
+    def test_classic_item_decrease_1_all(self):
         items = [Item("Item commun", 10, 10)]
         gilded_rose = GildedRose(items)
         gilded_rose.update_quality()
         self.assertEquals(9, items[0].quality) and self.assertEquals(9, items[0].sell_in)
+
 
 if __name__ == '__main__':
     unittest.main()
