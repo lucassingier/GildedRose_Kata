@@ -4,45 +4,17 @@ class GildedRose(object):
         self.items = items
 
     def update_quality(self):
-        Age = "Aged Brie"
-        Backstage = "Backstage passes to a TAFKAL80ETC concert"
-        Sulfuras = "Sulfuras, Hand of Ragnaros"
-        Conjured = "Conjured item"
-
         for item in self.items:
-            if item.name == Sulfuras:
-                item.sell_in = 0 #TO DO Enlever le critère sell_in de Sulfuras car ne se périme pas
+            if item.name == "Aged Brie":
+                AgedBrie.update_quality(item)
+            elif item.name == "Backstage passes to a TAFKAL80ETC concert":
+                Backstage.update_quality(item)
+            elif item.name == "Sulfuras, Hand of Ragnaros":
+                Sulfuras.update_quality(item)
+            elif item.name == "Conjured item":
+                Conjured.update_quality(item)
             else:
-                item.sell_in -= 1 #Tous les items diminuent leur sell_in de 1 à chaque fin de journée
-
-                if item.name == Age:
-                    if item.quality < 50:
-                        item.quality += 1
-                    if item.sell_in < 0:
-                        if item.quality < 50:
-                            item.quality += 1
-                elif item.name == Backstage:
-                    if item.quality < 50:
-                        item.quality += 1.
-                        if item.sell_in < 11:
-                            item.quality += 1
-                            if item.sell_in < 6:
-                                item.quality += 1
-                        if item.sell_in < 0:
-                            item.quality = 0
-
-                elif item.name == Conjured:
-                    if item.sell_in < 2:
-                        if item.quality > 3:
-                            item.quality -= 4
-                    else:item.quality -= 2
-
-                else:
-                    if item.quality > 0:
-                        item.quality -= 1
-                    if item.sell_in < 0:
-                        if item.quality > 0:
-                            item.quality -= 1
+                CommonItem.update_quality(item)
 
 
 class Item:
@@ -53,3 +25,59 @@ class Item:
 
     def __repr__(self):
         return "%s, %s, %s" % (self.name, self.sell_in, self.quality)
+
+
+class CommonItem(Item):
+    def update_quality(self):
+        self.sell_in -= 1
+        if self.sell_in <= 0:
+            self.quality -= 2
+        else:
+            self.quality -= 1
+
+
+#############
+class AgedBrie(CommonItem):
+    def update_quality(self):
+        self.sell_in -= 1
+        if self.quality < 50:
+            self.quality += 1
+
+
+#############
+
+class Sulfuras(CommonItem):
+    def update_quality(self):
+        self.sell_in = 0
+
+
+#############
+
+class Backstage(CommonItem):
+    def update_quality(self):
+        self.sell_in -= 1
+        if self.quality < 50:
+            self.quality += 1
+        if 11 > self.sell_in > 5:
+            self.quality += 1
+        elif 6 > self.sell_in > 0:
+            self.quality += 2
+        if self.sell_in < 0:
+            self.quality = 0
+        if self.quality > 50:
+            self.quality = 50
+
+#############
+
+class Conjured(CommonItem):
+    def update_quality(self):
+        self.sell_in -= 1
+        if self.sell_in < 0 and self.quality < 5:
+            self.quality = 0
+        elif self.sell_in < 0:
+            self.quality -= 4
+        else:
+            self.quality -= 2
+
+
+
