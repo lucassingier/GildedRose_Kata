@@ -4,8 +4,11 @@
 
 Le projet nous proviens d'un TP d'une élective "Méthodologie Tests"
 
+![alt text](https://www.zupimages.net/up/22/17/o34l.png)
+
 ## Parlons de ce projet
 
+Source: https://prograide.com/pregunta/2181/comment-ajouter-des-images-au-fichier-readmemd-sur-github
 Il s'agit d'un exercice de refactoring basé sur le célèbre référentiel GildedRose-Refactoring-Kata maintenu par Emily Bache. 
 Ce kata contient du code simple dans de nombreux langages de programmation différents qui doivent être refactorisés et améliorer la qualité du code.
 
